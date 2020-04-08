@@ -1,0 +1,30 @@
+---
+title: "Diamonds"
+author: "Jakob Liebmann"
+date: "8 April 2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_folding: show  
+    theme: united
+    highlight: tango
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 2: loading the diamonds dataset and exploring the main characteristics of the data
+
+```{r}
+library(tidyverse)
+library(skimr)
+df <- ggplot2::diamonds
+skim(df)
+head(df)
+help(diamonds)
+```
+
