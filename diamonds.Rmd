@@ -103,3 +103,24 @@ df%>%
   labs(x="clarity", y="amount")
 ```
 
+## Amounts by 2 categories
+
+```{r}
+df%>%
+  ggplot(aes(cut, color))+
+  geom_count()
+
+df%>%
+  ggplot(aes(clarity, color))+
+  geom_point()+
+  geom_jitter()
+
+df%>%
+  ggplot(aes(cut, clarity))+
+  geom_hex()
+
+df%>%
+  ggplot(aes(color, cut))+
+  geom_jitter(aes(color=color))
+```
+
