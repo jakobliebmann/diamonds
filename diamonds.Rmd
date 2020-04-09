@@ -14,10 +14,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
 ```
 
-# Task 2: loading the diamonds dataset and exploring the main characteristics of the data
+# Loading the diamonds dataset
 
 ```{r}
 library(tidyverse)
@@ -25,6 +29,77 @@ library(skimr)
 df <- ggplot2::diamonds
 skim(df)
 head(df)
-help(diamonds)
+#help(diamonds)
+```
+
+# Visual exploration
+## Amounts
+```{r}
+
+#funktionsorientierter Ansatz funktioniert leider nicht! :-(
+#===========================================================
+# jplot<-function(j=){
+#   pic<-df%>%
+#     group_by(j)%>%
+#     summarise(amount=n())%>%
+#     ggplot(aes(j, amount))+
+#     geom_col()
+#   return(pic)
+# }
+# jplot("cut")
+#===========================================================
+
+#some visualisation-work
+df%>%
+  group_by(cut)%>%
+  summarise(amount=n())%>%
+  ggplot(aes(cut, amount))+
+  geom_col()
+
+df%>%
+  group_by(color)%>%
+  summarise(amount=n())%>%
+  ggplot(aes(color, amount))+
+  geom_col()
+
+df%>%
+  group_by(clarity)%>%
+  summarise(amount=n())%>%
+  ggplot()+
+  geom_col(aes(clarity, amount))
+
+# generating the same result with geom_bar()
+df%>%
+  group_by(clarity)%>%
+  ggplot()+
+  geom_bar(aes(x=clarity))
+
+# turning into horizontal
+df%>%
+  group_by(cut)%>%
+  summarise(amount=n())%>%
+  ggplot(aes(amount, cut))+           #option 1: switching aesthetics
+  geom_col()
+
+df%>%
+  group_by(color)%>%
+  summarise(amount=n())%>%
+  ggplot(aes(color, amount))+
+  geom_col()+
+  coord_flip()                        #option 2: flipping coordinates
+
+#reordering by counts
+
+df%>%
+  count(clarity)%>%
+  ggplot(aes(y=n, x=fct_reorder(clarity, -n)))+    #descending
+  geom_col()+
+  labs(x="clarity", y="amount")
+
+df%>%
+  count(clarity)%>%
+  ggplot(aes(y=n, x=fct_reorder(clarity, n)))+     #ascending
+  geom_col()+
+  labs(x="clarity", y="amount")
 ```
 
