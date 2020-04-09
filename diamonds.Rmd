@@ -112,7 +112,6 @@ df%>%
 
 df%>%
   ggplot(aes(clarity, color))+
-  geom_point()+
   geom_jitter()
 
 df%>%
@@ -121,6 +120,39 @@ df%>%
 
 df%>%
   ggplot(aes(color, cut))+
-  geom_jitter(aes(color=color))
+  geom_point(aes(color=color), position = "jitter")
+
+df%>%
+  count(color, clarity)%>%
+  ggplot(aes(color, clarity, fill=n))+
+  geom_tile()
 ```
+
+## Distributions
+
+```{r}
+df%>%
+  ggplot()+
+  geom_histogram(aes(price), bins=10)
+
+df%>%
+  ggplot(aes(carat))+
+  geom_histogram(aes(y=stat(density)))
+
+#to be honest....built complete nonsense here ;-)
+df%>%
+  ggplot(aes(carat, price, color=cut, shape=clarity))+
+  geom_point()+
+  geom_density2d(colour = "red", size = 0.5, n = 15)+
+  theme_bw()
+
+df%>%
+  ggplot(aes(color, carat))+
+  geom_boxplot()
+```
+
+
+
+
+
 
